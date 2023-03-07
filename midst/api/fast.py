@@ -17,16 +17,23 @@ def midpoint(address_1:str, address_2:str):
 
     return ((lat_long_dict_1["lat"] + lat_long_dict_2["lat"]) / 2, (lat_long_dict_1["lng"] + lat_long_dict_2["lng"]) / 2)
 
-def places(lat_long:tuple, radius:int):
+def places(lat_long:tuple, radius:int, type:str):
     '''
-    Returns a JSON with a list of places arround a point
+    Returns a JSON dict with a list of places arround a point
     specified by latitude and longitude imputed as a tuple
     in a certan radius from this point
     '''
-    location = f'{lat_long[0]}%2C{lat_long[1]}'
+    base_url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
+    location = f'{lat_long[0]},{lat_long[1]}'
+    params = {
+        'location' : location,
+        'radius' : str(radius),
+        'type' : str(type),
+        'key' : API_KEY
+    }
+    # url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={location}&radius={radius}&type={type}&key={API_KEY}"
 
-    url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={location}&radius={radius}&key={API_KEY}"
+    places_json = requests.get(url=base_url, params=params)
 
-    places_json = requests.get(url=url)
-
-    return(places_json)
+    # for places in range(len(places_json['results']))
+    return places_json
