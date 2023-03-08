@@ -1,2 +1,5 @@
 # API
 googlemaps
+streamlit
+streamlit-searchbox
+wikipedia
