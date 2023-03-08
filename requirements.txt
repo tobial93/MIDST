@@ -1,0 +1,7 @@
+# API
+googlemaps
+streamlit
+streamlit-searchbox
+requests
+wikipedia
+
