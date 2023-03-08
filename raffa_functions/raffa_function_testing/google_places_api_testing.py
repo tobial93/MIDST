@@ -43,3 +43,28 @@ headers = {}
 response = requests.request("GET", url, headers=headers, params=payload)
 
 print(response.text)
+
+
+
+#-----------------testing API PLACES TYPES
+
+#import requests
+
+# Define the API endpoint
+endpoint = "https://maps.googleapis.com/maps/api/place/autocomplete/json"
+
+# Define the API parameters
+params = {
+    "input": "restaurant",  # Your search query
+    "types": "(cities)",  # Your preferred place type(s)
+    "key": midst_api_key,  # Your Google API key
+}
+
+# Make a request to the API endpoint with the parameters
+response = requests.get(endpoint, params=params)
+
+# Get the suggestions from the API response
+suggestions = [result["description"] for result in response.json()["predictions"]]
+
+# Print the suggestions
+print(suggestions)
