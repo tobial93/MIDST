@@ -3,7 +3,8 @@ import requests
 import json
 from midst.params import *
 
-def get_lat_lon(address: str):
+
+def get_lat_lon(address: str, API_KEY): # for STREAMLIT DEPLOYMENT we are passing API_KEY
     '''
     Returns the long and lat of an imputed address
     '''
@@ -42,7 +43,7 @@ def time_to_get_there(address_1:str, address_2:str, midpoint:tuple, mode:str):
               "key": API_KEY,
               }
 
-    # Parameters Person 2
+    # Parameters Person 2str
     params2 = {"origin": address_2,
               "destination": midpoint_string,
               "mode": mode,
