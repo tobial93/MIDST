@@ -46,7 +46,7 @@ from pydeck.types import String
 #   </body>
 # </html>
 # ''')
-
+radius = 300
 
 st.title('Meet me halfway! :man-kiss-man:')
 
@@ -120,7 +120,7 @@ type_option = st.selectbox(
 
 if selected_location_A and selected_location_B:
     mid_point = mdt.midpoint(str(selected_location_A),str(selected_location_B))
-    places_json = mdt.places(mid_point, radius=200, type=str(type_option)).json()
+    places_json = mdt.places(mid_point, radius=radius, type=str(type_option)).json()
     places_list = mdt.coords_name(places_json)
     df = pd.DataFrame(places_list, columns=['lat', 'lon', 'name'])
     df_midpoint = pd.DataFrame([mid_point], columns = ['lat', 'lon'])
@@ -136,7 +136,7 @@ if selected_location_A and selected_location_B:
             data=df_midpoint,
             get_position='[lon, lat]',
             get_color='[0, 0, 100, 30]',
-            get_radius=200,
+            get_radius=radius,
         ),
         pdk.Layer(
             'ScatterplotLayer',
@@ -148,6 +148,7 @@ if selected_location_A and selected_location_B:
         pdk.Layer(
             "TextLayer",
             data = df,
+            sizeScale = 0.4,
             pickable=True,
             get_position='[lon, lat]',
             get_text='name',
