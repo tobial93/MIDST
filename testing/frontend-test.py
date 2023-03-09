@@ -1,7 +1,5 @@
 import streamlit as st
 import pandas as pd
-import datetime
-import requests
 import numpy as np
 import pydeck as pdk
 from streamlit_searchbox import st_searchbox
@@ -11,41 +9,7 @@ import pydeck as pdk
 from midst.params import *
 from pydeck.types import String
 
-# st.components.v1.html('''
-# <!DOCTYPE html>
-# <html>
-#   <head>
-#     <title>Directions</title>
-#     <script src="https://maps.googleapis.com/maps/api/js?key={API_KEY}"></script>
-#     <script>
-#       function initMap() {
-#         var map = new google.maps.Map(document.getElementById('map'), {
-#           zoom: 7,
-#           center: {lat: 52.5200, lng: 13.4050}
-#         });
-#         var directionsService = new google.maps.DirectionsService;
-#         var directionsDisplay = new google.maps.DirectionsRenderer({
-#           map: map
-#         });
-#         directionsService.route({
-#           origin: 'Berlin',
-#           destination: 'Munich',
-#           travelMode: 'DRIVING'
-#         }, function(response, status) {
-#           if (status === 'OK') {
-#             directionsDisplay.setDirections(response);
-#           } else {
-#             window.alert('Directions request failed due to ' + status);
-#           }
-#         });
-#       }
-#     </script>
-#   </head>
-#   <body onload="initMap()">
-#     <div id="map" style="height: 500px"></div>
-#   </body>
-# </html>
-# ''')
+
 radius = 300
 
 st.title('Meet me halfway! :man-kiss-man:')
@@ -119,7 +83,9 @@ type_option = st.selectbox(
             'zoo')))
 
 if selected_location_A and selected_location_B:
-    mid_point = mdt.midpoint(str(selected_location_A),str(selected_location_B))
+    loc_A_cords = mdt.get_lat_lon(selected_location_A)
+    loc_B_cords = mdt.get_lat_lon(selected_location_B)
+    mid_point = mdt.midpoint(loc_A_cords,loc_B_cords)
     places_json = mdt.places(mid_point, radius=radius, type=str(type_option)).json()
     places_list = mdt.coords_name(places_json)
     df = pd.DataFrame(places_list, columns=['lat', 'lon', 'name'])

@@ -3,26 +3,31 @@ import requests
 import json
 from midst.params import *
 
-def midpoint(address_1:str, address_2:str):
+def get_lat_lon(address: str):
     '''
-    Returns a tuple with latitude and longitude from
-    mid point between the two addresses
+    Returns the long and lat of an imputed address
     '''
     gmaps = googlemaps.Client(key=API_KEY)
 
-    geocode_result_1 = gmaps.geocode(address_1)
-    geocode_result_2 = gmaps.geocode(address_2)
+    geocode_result_1 = gmaps.geocode(address)
 
     lat_long_dict_1 = geocode_result_1[0]['geometry']['location']
-    lat_long_dict_2 = geocode_result_2[0]['geometry']['location']
+    return lat_long_dict_1["lat"], lat_long_dict_1["lng"]
 
-    return ((lat_long_dict_1["lat"] + lat_long_dict_2["lat"]) / 2, (lat_long_dict_1["lng"] + lat_long_dict_2["lng"]) / 2)
-
-def get_directions_to_midpoint(address_1:str, address_2:str, midpoint:tuple, mode:str):
+def midpoint(loc_1, loc_2):
     '''
-    Returns a tuple, the first element in the tuple is the directions from
-    the adresses to the midpoint, and the second element is the time
-    it takes to get to the midpoint
+    Returns a tuple with latitude and longitude from
+    mid point between the two locations as tuple(lat&lon)
+    loc_1: (lat, lon)
+    '''
+    return ((loc_1[0] + loc_2[0]) / 2, (loc_1[1] + loc_2[1]) / 2)
+
+def time_to_get_there(address_1:str, address_2:str, midpoint:tuple, mode:str):
+    '''
+    Returns a tuple of the aproximate time to get to midpoint,
+    when using specified transport mode, first elemente will be duration
+    from address 1, second element in the touple will be duration
+    from address 2
     '''
     # Convert midpoint tuple to a string
     # midpoint_string = str(midpoint[0]) + "," + str(midpoint[1])
@@ -47,20 +52,15 @@ def get_directions_to_midpoint(address_1:str, address_2:str, midpoint:tuple, mod
     res1 = requests.get(url, params=params1)
     route1 = json.loads(res1.content)["routes"][0]["legs"][0]
     # Distance and duration for person 1
-    distance1 = route1["distance"]["text"]
     duration1 = route1["duration"]["text"]
 
     # API request for person 2
     res2 = requests.get(url, params=params2)
     route2 = json.loads(res2.content)["routes"][0]["legs"][0]
     # Distance and duration for person 2
-    distance2 = route2["distance"]["text"]
     duration2 = route2["duration"]["text"]
 
-    # Directions for both persons
-    directions = f"Directions from person 1: {route1['steps']}\nDirections from person 2: {route2['steps']}"
-
-    return directions, f"Time to get to midpoint: {duration1} for person 1, {duration2} for person 2"
+    return duration1, duration2
 
 def places(lat_long:tuple, radius:int, type:str):
     '''
@@ -85,7 +85,7 @@ def places(lat_long:tuple, radius:int, type:str):
 
 def coords_name(JSON:dict) -> dict:
     '''
-    Returns a list of list with the latitude and
+    Returns a list of lists that incluides the latitude,
     longitude and the name of the listed places on the JSON file
     '''
     nr_of_results = len(JSON['results'])
@@ -102,3 +102,15 @@ def coords_name(JSON:dict) -> dict:
         places_list.append(place)
 
     return places_list
+
+def maps_url_tomidpoint(location:tuple, midpoint:tuple):
+    '''
+    Returns a clickable hyperlink to Google Maps.
+    The starting point is the location A lat/lng.
+    The destination point is the midpoint lat/lng.
+    '''
+    start_lat, start_lng = location
+    midpoint_lat, midpoint_lng = midpoint
+
+    maps_url_tomidpoint = f"https://www.google.com/maps/dir/{start_lat},{start_lng}/{midpoint_lat},{midpoint_lng}"
+    return maps_url_tomidpoint
