@@ -10,6 +10,10 @@ from midst.params import *
 from pydeck.types import String
 
 
+spell = st.secrets['spell'] # for STREAMLIT DEPLOYMENT
+key = st.secrets.some_magic_api.API_KEY_STREAMLIT_SECRET # for STREAMLIT DEPLOYMENT
+
+
 radius = 300
 
 st.title('Meet me halfway! :man-kiss-man:')
@@ -83,8 +87,8 @@ type_option = st.selectbox(
             'zoo')))
 
 if selected_location_A and selected_location_B:
-    loc_A_cords = mdt.get_lat_lon(selected_location_A)
-    loc_B_cords = mdt.get_lat_lon(selected_location_B)
+    loc_A_cords = mdt.get_lat_lon(selected_location_A, key) # for STREAMLIT DEPLOYMENT we are passing API_KEY called key
+    loc_B_cords = mdt.get_lat_lon(selected_location_B, key) # for STREAMLIT DEPLOYMENT we are passing API_KEY called key
     mid_point = mdt.midpoint(loc_A_cords,loc_B_cords)
     places_json = mdt.places(mid_point, radius=radius, type=str(type_option)).json()
     places_list = mdt.coords_name(places_json)
