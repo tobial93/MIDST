@@ -13,16 +13,9 @@ JSON_places = mdt.places(mid_point,500,type_).json()
 list_loc = mdt.coords_name(JSON_places)
 directions = mdt.get_directions_to_midpoint(address_1, address_2, mid_point, mode)
 
-coordinates_list = []
-for n in range(len(list_loc)):
-    cords = []
-    cords.append(list_loc[0][0])
-    cords.append(list_loc[0][1])
-    coordinates_list.append(cords)
-
 mid_point_df = pd.DataFrame(data=[mid_point], columns= ['lon', 'lat'])
 
-print(mid_point_df)
+print(list_loc)
 
 # https://maps.googleapis.com/maps/api/staticmap?size=512x512&maptype=roadmap\
 # &markers=size:mid%7Ccolor:red%7CSan+Francisco,CA%7COakland,CA%7CSan+Jose,CA&key={API_KEY}
