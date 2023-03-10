@@ -35,10 +35,10 @@ def location_input(string, API_KEY):
 #     return [prediction['description'] for prediction in predictions]
 
 # SEARCHBOX Component: Pass location_input to searchbox feature in streamlit list format
-def search_location_A(searchterm, rerun=False) -> List[str]:
+def search_location_A(searchterm, api_key, rerun=False) -> List[str]:
     return location_input(searchterm, api_key) if searchterm else []
 
-def search_location_B(searchterm, rerun=False) -> List[str]:
+def search_location_B(searchterm, api_key, rerun=False) -> List[str]:
     return location_input(searchterm, api_key) if searchterm else []
 
 
@@ -58,5 +58,5 @@ def search_location_B(searchterm, rerun=False) -> List[str]:
 
 # ---------TESTING IN GIT-----------------
 # testing def locaiton_input fuction while running autocomplete.py file in git
-print(location_input("le wagon 26"))
-print(location_input("richard sorge"))
+# print(location_input("le wagon 26"))
+# print(location_input("richard sorge"))
