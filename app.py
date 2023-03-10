@@ -12,7 +12,6 @@ from pydeck.types import String
 
 spell = st.secrets['spell'] # for STREAMLIT DEPLOYMENT
 api_key = st.secrets.some_magic_api.API_KEY # for STREAMLIT DEPLOYMENT
-print(api_key)
 
 radius = 300
 
