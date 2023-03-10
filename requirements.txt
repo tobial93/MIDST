@@ -4,4 +4,3 @@ streamlit
 streamlit-searchbox
 requests
 wikipedia
-
