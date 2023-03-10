@@ -118,3 +118,76 @@ def maps_url_tomidpoint(location:tuple, midpoint:tuple):
     maps_url_tomidpoint = f"https://www.google.com/maps/dir/{start_lat},{start_lng}/{midpoint_lat},{midpoint_lng}"
     return maps_url_tomidpoint
 
+def get_directions_to_midpoint_two_modes(loc_1, loc_2, mid_point, mode1, mode2, API_KEY):
+    # Convert midpoint tuple to a string
+    midpoint_string = f'{mid_point[0]},{mid_point[1]}'
+
+    # Base URL for API
+    url = "https://maps.googleapis.com/maps/api/directions/json?"
+
+    # Parameters Person 1
+    params1 = {"origin": f'{loc_1[0]},{loc_1[1]}',
+              "destination": midpoint_string,
+              "mode": mode1,
+              "key": API_KEY,
+              }
+
+    # Parameters Person 2
+    params2 = {"origin": f'{loc_2[0]},{loc_2[1]}',
+              "destination": midpoint_string,
+              "mode": mode2,
+              "key": API_KEY,
+              }
+
+    # API request for person 1
+    res1 = requests.get(url, params=params1)
+    route1 = json.loads(res1.content)["routes"][0]["legs"][0]
+    # Duration for person 1
+    duration1_in_seconds = route1["duration"]["value"]
+
+    # API request for person 2
+    res2 = requests.get(url, params=params2)
+    route2 = json.loads(res2.content)["routes"][0]["legs"][0]
+    # Duration for person 2
+    duration2_in_seconds = route2["duration"]["value"]
+
+    # Convert adjusted duration to minutes
+    duration1 = int(duration1_in_seconds)
+    duration2 = int(duration2_in_seconds)
+    return duration1, duration2
+
+def find_true_midpoint(loc1, loc2, initial_midpoint, mode1, mode2, API_KEY, counter=0):
+    """
+    Returns an adjusted midpoint towards the location with the bigger travel time in
+    the form of tuple with lat & lng
+    """
+
+    # initial_midpoint: latitude and longitude of the initial midpoint calculated by average
+    if counter >= 10: # counter: number of recursive calls made so far
+        return initial_midpoint
+
+    # calculate travel time for person 1 to midpoint
+    # calculate travel time for person 2 to midpoint
+    travel1, travel2 = get_directions_to_midpoint_two_modes(loc1, loc2, initial_midpoint, mode1, mode2, API_KEY)
+
+    # check if travel times are within 5 minutes of each other
+    # if the travel times are within the threshold, the initial midpoint will be returned
+    # if the travel times differ by more than 5 minutes, it will continue to change the midpoint
+    # threshold of 5 minutes
+    if abs(travel1 - travel2) < 300: # 300 seconds = 5 minutes
+        return initial_midpoint
+
+    # compare travel times
+    # if travel 1 is larger than travel 2, a new midpoint is calculated between location 1 and the inital midpoint
+    if travel1 > travel2:
+        # change midpoint
+        new_midpoint = midpoint(loc1, initial_midpoint)
+        # call function with new midpoint and increment counter
+        return find_true_midpoint(loc1, loc2, new_midpoint, mode1, mode2, API_KEY, counter=counter+1)
+    # compare travel times
+    # if travel 1 is smaller than travel 2, a new midpoint is calculated between location 2 and the inital midpoint
+    if travel1 < travel2:
+        # change midpoint
+        new_midpoint = midpoint(loc2, initial_midpoint)
+        # call function with new midpoint and increment counter
+        return find_true_midpoint(loc1, loc2, new_midpoint, mode1, mode2, API_KEY, counter=counter+1)
