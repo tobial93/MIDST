@@ -1,7 +1,6 @@
 # API
 googlemaps
 streamlit
-streamlit-searchbox
+streamlit_searchbox
 requests
 wikipedia
-
