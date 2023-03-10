@@ -11,7 +11,7 @@ from pydeck.types import String
 
 
 spell = st.secrets['spell'] # for STREAMLIT DEPLOYMENT
-key = st.secrets.some_magic_api.API_KEY_STREAMLIT_SECRET # for STREAMLIT DEPLOYMENT
+key = st.secrets.some_magic_api.API_KEY # for STREAMLIT DEPLOYMENT
 
 
 radius = 300
@@ -90,7 +90,7 @@ if selected_location_A and selected_location_B:
     loc_A_cords = mdt.get_lat_lon(selected_location_A, key) # for STREAMLIT DEPLOYMENT we are passing API_KEY called key
     loc_B_cords = mdt.get_lat_lon(selected_location_B, key) # for STREAMLIT DEPLOYMENT we are passing API_KEY called key
     mid_point = mdt.midpoint(loc_A_cords,loc_B_cords)
-    places_json = mdt.places(mid_point, radius=radius, type=str(type_option)).json()
+    places_json = mdt.places(mid_point, radius=radius, type=str(type_option), API_KEY=key).json()
     places_list = mdt.coords_name(places_json)
     df = pd.DataFrame(places_list, columns=['lat', 'lon', 'name'])
     df_midpoint = pd.DataFrame([mid_point], columns = ['lat', 'lon'])
