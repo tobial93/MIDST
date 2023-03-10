@@ -82,13 +82,13 @@ type_option = st.selectbox(
             'zoo')))
 
 if selected_location_B and type_option:
-    loc_A_cords = mdt.get_lat_lon(selected_location_A, api_key) # for STREAMLIT DEPLOYMENT we are passing API_KEY called key
-    loc_B_cords = mdt.get_lat_lon(selected_location_B, api_key) # for STREAMLIT DEPLOYMENT we are passing API_KEY called key
+    loc_A_cords = mdt.get_lat_lon(selected_location_A, api_key)
+    loc_B_cords = mdt.get_lat_lon(selected_location_B, api_key)
     mid_point = mdt.midpoint(loc_A_cords,loc_B_cords)
 
     # From this point, the code will be in a new page
 
-    true_midpoint = find_true_midpoint(loc_A_cords, loc_B_cords, mid_point, option_1, option_2, api_key=api_key)
+    true_midpoint = mdt.find_true_midpoint(loc_A_cords, loc_B_cords, mid_point, option_1, option_2, API_KEY=api_key)
 
     df_midpoint = pd.DataFrame([mid_point], columns = ['lat', 'lon'])
     df_true_midpoint = pd.DataFrame([true_midpoint], columns = ['lat', 'lon'])
