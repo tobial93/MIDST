@@ -98,6 +98,13 @@ if selected_location_B and type_option:
     places_list = mdt.coords_name(places_json)
     df = pd.DataFrame(places_list, columns=['lat', 'lon', 'name'])
 
+    sel_locs = []
+
+    sel_locs.append(loc_A_cords)
+    sel_locs.append(loc_B_cords)
+
+    df_locations = pd.DataFrame(sel_locs, columns=['lat','lon'])
+
     with col1:
         url_A = mdt.maps_url_tomidpoint(loc_A_cords, true_midpoint)
         st.markdown(f'''
@@ -153,7 +160,14 @@ if selected_location_B and type_option:
             # This distinguishes them from columns in a data set
             get_text_anchor=String("middle"),
             get_alignment_baseline=String("bottom"),
-        )
+        ),
+        pdk.Layer(
+            'ScatterplotLayer',
+            data=df_locations,
+            get_position='[lon, lat]',
+            get_color='[100, 0, 0, 200]',
+            get_radius=50,
+         )
     ],
 ))
 
