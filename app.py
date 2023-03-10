@@ -26,11 +26,11 @@ with col1:
     search_location_A, # test in the streamlit frontend>> 'Nordhauser Straße' >> select: address_1 = 'Nordhauser Straße 2, 10589 Berlin, Deutschland'
     key="location_searchbox_A",
 )
-    option = st.selectbox(
-        'How do you want to get there?',
-        ('Public transportation', 'Car', 'walking'))
+    # option = st.selectbox(
+    #     'How do you want to get there?',
+    #     ('Public transportation', 'Car', 'walking'))
 
-    st.write('You selected:', option)
+    # st.write('You selected:', option)
 with col2:
     st.markdown('## My friend is at :round_pushpin:')
     selected_location_B = st_searchbox(
@@ -39,14 +39,14 @@ with col2:
     )
     # df2 = pd.DataFrame([[52.5318236,13.3481977]], columns=['lat', 'lon'])
     # st.map(df2)
-    option2 = st.selectbox(
-        'How does your friend want to get there?',
-        ('Public transportation', 'Car', 'walking'))
-    st.write('You selected for your friend:', option)
+    # option2 = st.selectbox(
+    #     'How does your friend want to get there?',
+    #     ('Public transportation', 'Car', 'walking'))
+    # st.write('You selected for your friend:', option)
 
 type_option = st.selectbox(
         'Things to do at the mid point',
-        (('Select activity',
+        (('',
             'amusement_park',
             'aquarium',
             'art_gallery',
@@ -86,7 +86,7 @@ type_option = st.selectbox(
             'tourist_attraction',
             'zoo')))
 
-if selected_location_A and selected_location_B:
+if selected_location_B and type_option:
     loc_A_cords = mdt.get_lat_lon(selected_location_A, key) # for STREAMLIT DEPLOYMENT we are passing API_KEY called key
     loc_B_cords = mdt.get_lat_lon(selected_location_B, key) # for STREAMLIT DEPLOYMENT we are passing API_KEY called key
     mid_point = mdt.midpoint(loc_A_cords,loc_B_cords)
@@ -94,6 +94,20 @@ if selected_location_A and selected_location_B:
     places_list = mdt.coords_name(places_json)
     df = pd.DataFrame(places_list, columns=['lat', 'lon', 'name'])
     df_midpoint = pd.DataFrame([mid_point], columns = ['lat', 'lon'])
+
+    with col1:
+        url_A = mdt.maps_url_tomidpoint(loc_A_cords, mid_point)
+        st.markdown(f'''
+        <a href={url_A}><button style="background-color:Pink;">How can I get there</button></a>
+        ''',
+        unsafe_allow_html=True)
+
+    with col2:
+        url_B = mdt.maps_url_tomidpoint(loc_B_cords, mid_point)
+        st.markdown(f'''
+        <a href={url_B}><button style="background-color:Pink;">How can Your friend get there</button></a>
+        ''',
+        unsafe_allow_html=True)
 
     st.pydeck_chart(pdk.Deck(map_style=pdk.map_styles.ROAD, initial_view_state=pdk.ViewState(
         latitude=mid_point[0],
