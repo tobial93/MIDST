@@ -12,12 +12,14 @@ mode2 = "driving"
 
 def find_true_midpoint(loc1, loc2, initial_midpoint, mode1, mode2, counter=0):
     """
-    loc1, loc2 are the latitude and longitude for person 1 and person 2
-    initial_midpoint: latitude and longitude of the initial midpoint calculated by average 
-    counter: number of recursive calls made so far
+    Returns an adjusted midpoint towards the location with the bigger travel time in 
+    the form of tuple with lat & lng
     """
     # check if counter has reached maximum number of iterations
-    if counter >= 10:
+    # initial_midpoint: latitude and longitude of the initial midpoint calculated by average 
+
+    if counter >= 10: # counter: number of recursive calls made so far
+
         return initial_midpoint
     
     # calculate travel time for person 1 to midpoint
@@ -39,15 +41,14 @@ def find_true_midpoint(loc1, loc2, initial_midpoint, mode1, mode2, counter=0):
         # print(new_midpoint)
         # call function with new midpoint and increment counter
         return find_true_midpoint(loc1, loc2, new_midpoint, mode1, mode2, counter=counter+1)
+    # compare travel times
+    # if travel 1 is smaller than travel 2, a new midpoint is calculated between location 2 and the inital midpoint
     if travel1 < travel2:
         # change midpoint
         new_midpoint = mid_point(loc2, initial_midpoint)
         # call function with new midpoint and increment counter
         return find_true_midpoint(loc1, loc2, new_midpoint, mode1, mode2, counter=counter+1)
-    # # add tolerance calculation
-    # if travel1 == travel2:
-    #     return initial_midpoint
-
+    
 # Test the function 
 initial_midpoint = mid_point(loc1, loc2)
 print(initial_midpoint)
