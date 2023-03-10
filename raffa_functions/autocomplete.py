@@ -1,41 +1,45 @@
 import requests
 import os
 from typing import List#, Dict
+import streamlit as st
 
-API_KEY = os.environ.get("API_KEY")
+# API_KEY = os.environ.get("API_KEY")
 
 
 # AUTOCOMPLETE Component using autocomplete API
-api_key = API_KEY
+# api_key = API_KEY
+
+api_key = st.secrets.some_magic_api.API_KEY
+
 base_url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json'
 
 
-def location_input(string):
+def location_input(string, API_KEY):
     params = {
         'input': string,
-        'key': api_key
+        'key': API_KEY
     }
-        
+
     response = requests.get(base_url, params=params)
     predictions = response.json()['predictions']
     return [prediction['description'] for prediction in predictions]
 
-# def location_input_B(string): 
+# def location_input_B(string):
 #     params = {
 #         'input': string,
 #         'key': api_key
 #     }
-    
+
 #     response = requests.get(base_url, params=params)
 #     predictions = response.json()['predictions']
 #     return [prediction['description'] for prediction in predictions]
 
 # SEARCHBOX Component: Pass location_input to searchbox feature in streamlit list format
 def search_location_A(searchterm, rerun=False) -> List[str]:
-    return location_input(searchterm) if searchterm else []
+    return location_input(searchterm, api_key) if searchterm else []
 
 def search_location_B(searchterm, rerun=False) -> List[str]:
-    return location_input(searchterm) if searchterm else []
+    return location_input(searchterm, api_key) if searchterm else []
 
 
 
@@ -56,4 +60,3 @@ def search_location_B(searchterm, rerun=False) -> List[str]:
 # testing def locaiton_input fuction while running autocomplete.py file in git
 print(location_input("le wagon 26"))
 print(location_input("richard sorge"))
-
