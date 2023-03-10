@@ -23,7 +23,7 @@ def midpoint(loc_1, loc_2):
     '''
     return ((loc_1[0] + loc_2[0]) / 2, (loc_1[1] + loc_2[1]) / 2)
 
-def time_to_get_there(address_1:str, address_2:str, midpoint:tuple, mode:str):
+def time_to_get_there(address_1:str, address_2:str, midpoint:tuple, mode:str, API_KEY):
     '''
     Returns a tuple of the aproximate time to get to midpoint,
     when using specified transport mode, first elemente will be duration
@@ -63,7 +63,7 @@ def time_to_get_there(address_1:str, address_2:str, midpoint:tuple, mode:str):
 
     return duration1, duration2
 
-def places(lat_long:tuple, radius:int, type:str):
+def places(lat_long:tuple, radius:int, type:str, API_KEY):
     '''
     Returns a JSON dict with a list of places arround a point
     specified by latitude and longitude imputed as a tuple
