@@ -64,6 +64,7 @@ def time_to_get_there(address_1:str, address_2:str, midpoint:tuple, mode:str, AP
     return duration1, duration2
 
 def places(lat_long:tuple, radius:int, type:str, API_KEY):
+
     '''
     Returns a JSON dict with a list of places arround a point
     specified by latitude and longitude imputed as a tuple
@@ -83,6 +84,7 @@ def places(lat_long:tuple, radius:int, type:str, API_KEY):
 
     # for places in range(len(places_json['results']))
     return places_json
+
 
 def coords_name(JSON:dict) -> dict:
     '''
@@ -115,3 +117,4 @@ def maps_url_tomidpoint(location:tuple, midpoint:tuple):
 
     maps_url_tomidpoint = f"https://www.google.com/maps/dir/{start_lat},{start_lng}/{midpoint_lat},{midpoint_lng}"
     return maps_url_tomidpoint
+

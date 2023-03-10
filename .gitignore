@@ -8,6 +8,7 @@ raw_data/
 __MACOSX
 # Jupiter Notebook #
 .pytest_cache
-__pycache__
+**/__pycache__
 *checkpoint.ipynb
 *.ipynb_checkpoints
+

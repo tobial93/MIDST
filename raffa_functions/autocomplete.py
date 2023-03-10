@@ -1,6 +1,7 @@
 import requests
 import os
 from typing import List#, Dict
+
 import streamlit as st
 
 # API_KEY = os.environ.get("API_KEY")
@@ -24,7 +25,7 @@ def location_input(string):
     predictions = response.json()['predictions']
     return [prediction['description'] for prediction in predictions]
 
-# def location_input_B(string):
+
 #     params = {
 #         'input': string,
 #         'key': api_key
@@ -58,5 +59,8 @@ def search_location_B(searchterm, rerun=False) -> List[str]:
 
 # ---------TESTING IN GIT-----------------
 # testing def locaiton_input fuction while running autocomplete.py file in git
+
+
 # print(location_input("le wagon 26"))
 # print(location_input("richard sorge"))
+
