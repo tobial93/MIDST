@@ -14,10 +14,10 @@ api_key = st.secrets.some_magic_api.API_KEY
 base_url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json'
 
 
-def location_input(string, API_KEY):
+def location_input(string):
     params = {
         'input': string,
-        'key': API_KEY
+        'key': api_key
     }
 
     response = requests.get(base_url, params=params)
@@ -35,11 +35,11 @@ def location_input(string, API_KEY):
 #     return [prediction['description'] for prediction in predictions]
 
 # SEARCHBOX Component: Pass location_input to searchbox feature in streamlit list format
-def search_location_A(searchterm, api_key, rerun=False) -> List[str]:
-    return location_input(searchterm, api_key) if searchterm else []
+def search_location_A(searchterm, rerun=False) -> List[str]:
+    return location_input(searchterm) if searchterm else []
 
-def search_location_B(searchterm, api_key, rerun=False) -> List[str]:
-    return location_input(searchterm, api_key) if searchterm else []
+def search_location_B(searchterm, rerun=False) -> List[str]:
+    return location_input(searchterm) if searchterm else []
 
 
 

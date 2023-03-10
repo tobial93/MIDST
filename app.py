@@ -23,7 +23,7 @@ col1, col2 = st.columns(2)
 with col1:
     st.markdown('## I am at :round_pushpin:')
     selected_location_A = st_searchbox(
-    search_location_A(api_key=api_key), # test in the streamlit frontend>> 'Nordhauser Straße' >> select: address_1 = 'Nordhauser Straße 2, 10589 Berlin, Deutschland'
+    search_location_A, # test in the streamlit frontend>> 'Nordhauser Straße' >> select: address_1 = 'Nordhauser Straße 2, 10589 Berlin, Deutschland'
     key="location_searchbox_A",
 )
     # option = st.selectbox(
@@ -34,7 +34,7 @@ with col1:
 with col2:
     st.markdown('## My friend is at :round_pushpin:')
     selected_location_B = st_searchbox(
-        search_location_B(api_key=api_key), # test in the streamlit frontend>> 'Rudi-Dutschke' >> select: address_2 = 'Rudi-Dutschke-Straße 26, 10969 Berlin'
+        search_location_B, # test in the streamlit frontend>> 'Rudi-Dutschke' >> select: address_2 = 'Rudi-Dutschke-Straße 26, 10969 Berlin'
         key="location_searchbox_B",
     )
     # df2 = pd.DataFrame([[52.5318236,13.3481977]], columns=['lat', 'lon'])
