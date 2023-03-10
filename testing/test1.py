@@ -32,22 +32,22 @@ def seconds_to_minutes(seconds):
     minutes, seconds = divmod(seconds, 60)
     return f"{minutes} minutes {seconds} seconds"
 
-def get_directions_to_midpoint_two_modes(address_1, address_2, mid_point, mode1, mode2):
+def get_directions_to_midpoint_two_modes(loc_1, loc_2, mid_point, mode1, mode2):
     # Convert midpoint tuple to a string
     midpoint_string = f'{mid_point[0]},{mid_point[1]}'
 
-    # Base URL for API 
+    # Base URL for API
     url = "https://maps.googleapis.com/maps/api/directions/json?"
 
-    # Parameters Person 1 
-    params1 = {"origin": address_1,
+    # Parameters Person 1
+    params1 = {"origin": f'{loc_1[0]},{loc_1[1]}',
               "destination": midpoint_string,
               "mode": mode1,
               "key": api_key,
               }
 
     # Parameters Person 2
-    params2 = {"origin": address_2,
+    params2 = {"origin": f'{loc_2[0]},{loc_2[1]}',
               "destination": midpoint_string,
               "mode": mode2,
               "key": api_key,
@@ -57,7 +57,7 @@ def get_directions_to_midpoint_two_modes(address_1, address_2, mid_point, mode1,
     res1 = requests.get(url, params=params1)
     # print(res1)
     route1 = json.loads(res1.content)["routes"][0]["legs"][0]
-    # Distance and duration for person 1 
+    # Distance and duration for person 1
     distance1 = route1["distance"]["text"]
     duration1_in_seconds = route1["duration"]["value"]
 
