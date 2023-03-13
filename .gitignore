@@ -1,6 +1,6 @@
 raw_data/
 .env
-.streamlit/
+.streamlit/secrets.toml
 
 # OS generated files #
 ######################
