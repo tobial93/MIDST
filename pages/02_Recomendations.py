@@ -7,7 +7,7 @@ from pydeck.types import String
 import plotly.express as px
 import webbrowser
 import urllib.parse
-
+st.sidebar.title('Your MIDST recomendations')
 st.title("These are Your MIDST recomendations")
 
 spell = st.secrets['spell'] # for STREAMLIT DEPLOYMENT
