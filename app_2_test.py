@@ -84,9 +84,9 @@ type_option = st.selectbox(
             'tourist_attraction',
             'walking')))
 
-radius = st.slider('Radius', min_value=300, max_value=700)
+radius = st.slider('Radius (in meters)', min_value=300, max_value=700)
 
-if selected_location_B and type_option:
+if type_option:
     loc_A_cords = mdt.get_lat_lon(selected_location_A, api_key)
     loc_B_cords = mdt.get_lat_lon(selected_location_B, api_key)
     mid_point = mdt.midpoint(loc_A_cords,loc_B_cords)
@@ -100,14 +100,22 @@ if selected_location_B and type_option:
     places_list = mdt.coords_name(places_json)
     df = pd.DataFrame(places_list, columns=['lat', 'lon', 'name'])
 
-    sel_locs = []
+    sel_locs_A = []
+    sel_locs_A.append(loc_A_cords[0])
+    sel_locs_A.append(loc_A_cords[1])
+    sel_locs_A.append('This is YOU')
+    sel_locs_B = []
+    sel_locs_B.append(loc_B_cords[0])
+    sel_locs_B.append(loc_B_cords[1])
+    sel_locs_B.append('This is YOUR friend')
 
-    sel_locs.append(loc_A_cords)
-    sel_locs.append(loc_B_cords)
+    sel_locs = [sel_locs_A, sel_locs_B]
 
-    df_locations = pd.DataFrame(sel_locs, columns=['lat','lon'])
+    # sel_locs.append(loc_A_cords)
+    # sel_locs.append(loc_B_cords)
 
-########################################################################################################
+    df_locations = pd.DataFrame(sel_locs, columns=['lat','lon', 'name'])
+
     gmaps = googlemaps.Client(key=api_key)
     reverse_mid = gmaps.reverse_geocode(true_midpoint)
     bezirk = reverse_mid[0]['address_components'][2]['long_name']
@@ -175,9 +183,24 @@ if selected_location_B and type_option:
                     'ScatterplotLayer',
                     data=df_locations,
                     get_position='[lon, lat]',
-                    get_color='[100, 0, 0, 200]',
+                    get_color='[255, 0, 0, 200]',
                     get_radius=15,
-                )
+                ),
+                pdk.Layer(
+                    "TextLayer",
+                    data = df_locations,
+                    sizeScale = 0.8,
+                    pickable=True,
+                    get_position='[lon, lat]',
+                    get_text='name',
+                    get_size=16,
+                    get_color=[0, 0, 0],
+                    get_angle=0,
+                    # Note that string constants in pydeck are explicitly passed as strings
+                    # This distinguishes them from columns in a data set
+                    get_text_anchor=String("middle"),
+                    get_alignment_baseline=String("bottom")
+                ),
             ],
             ))
     else:
@@ -241,8 +264,38 @@ if selected_location_B and type_option:
                 'ScatterplotLayer',
                 data=df_locations,
                 get_position='[lon, lat]',
-                get_color='[100, 0, 0, 200]',
+                get_color='[255, 0, 0, 200]',
                 get_radius=15,
-            )
+            ),
+            pdk.Layer(
+                "TextLayer",
+                data = df_locations,
+                sizeScale = 0.8,
+                pickable=True,
+                get_position='[lon, lat]',
+                get_text='name',
+                get_size=16,
+                get_color=[255, 0, 0],
+                get_angle=0,
+                # Note that string constants in pydeck are explicitly passed as strings
+                # This distinguishes them from columns in a data set
+                get_text_anchor=String("middle"),
+                get_alignment_baseline=String("bottom")
+            ),
         ],
     ))
+
+if type_option:
+    st.session_state['true_midpoint'] = true_midpoint
+    st.session_state['df_true_midpoint'] = df_true_midpoint
+    st.session_state['df_midpoint'] = df_midpoint
+    st.session_state['radius'] = radius
+    st.session_state['df'] = df
+    st.session_state['df_locations'] = df_locations
+    st.session_state['places_json'] = places_json
+    st.session_state['loc_A_cords'] = loc_A_cords
+    st.session_state['loc_B_cords'] = loc_B_cords
+    st.session_state['option_1'] = option_1
+    st.session_state['option_2'] = option_2
+    st.session_state['selected_location_A'] = selected_location_A
+    st.session_state['selected_location_B'] = selected_location_B
