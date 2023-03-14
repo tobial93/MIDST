@@ -7,8 +7,8 @@ from pydeck.types import String
 import plotly.express as px
 import webbrowser
 import urllib.parse
-st.sidebar.title('Your MIDST recomendations')
-st.title("These are Your MIDST recomendations")
+st.sidebar.title('Your MIDST recommendations')
+st.title("These are Your MIDST recommendations")
 
 spell = st.secrets['spell'] # for STREAMLIT DEPLOYMENT
 api_key = st.secrets.some_magic_api.API_KEY # for STREAMLIT DEPLOYMENT
@@ -46,15 +46,15 @@ if st.session_state.type_option != '':
         # categorize rate_level
         try:
             if place['rating'] > 4.5                                             :
-                rating.append('Excellent')
+                rating.append('1-Excellent')
             elif place['rating'] > 4:
-                rating.append('Good')
+                rating.append('2-Good')
             elif place['rating'] > 3:
-                rating.append('Average')
+                rating.append('3-Average')
             elif place['rating'] > 2:
-                rating.append('Poor')
+                rating.append('4-Poor')
             else:
-                rating.append('Terriable')
+                rating.append('5-Terrible')
         except:
             rating.append('NA')
 
@@ -63,8 +63,8 @@ if st.session_state.type_option != '':
         'result_name': results_name,
         'rating': rating,
         'price_level': price_level,
-        'time_personA': time_for_location1,
-        'time_personB': time_for_location2,
+        'Time for YOU': time_for_location1,
+        'Time for YOUR friend': time_for_location2,
         'location': result_address})
 
     st.markdown('#### All the suggestions are here, please click on the column name for different rankings')
@@ -84,8 +84,8 @@ if st.session_state.type_option != '':
     df_results['price_level'] =  df_results['price_level'].apply(lambda x: categorize_price_level(x))
 
     # Get user inputs for hue variables
-    hue_cols = st.multiselect("Please select your criteria:", ['rating','price_level'])
-    st.write(f'you have choose {hue_cols} as your criteria. Please hover around the plot to see the details of each recommendation and find your best option')
+    hue_cols = st.multiselect("How long does it take to gete there? Compare your times on the next image, select your criteria:", ['rating','price_level'])
+    st.write('You can hover on the plot to see whats the option that fits you better')
 
     # Create plot
     if hue_cols:
@@ -96,7 +96,7 @@ if st.session_state.type_option != '':
                 return my_list[1]
             else:
                 return None
-        fig = px.scatter(df_results, x='time_personA', y='time_personB', hover_data=['result_name'],color=hue_cols[0], symbol=get_second_item(hue_cols))
+        fig = px.scatter(df_results, x='Time for YOU', y='Time for YOUR friend', hover_data=['result_name'],color=hue_cols[0], symbol=get_second_item(hue_cols))
         # Add column as annotation
         #fig.add_trace(go.Scatter(x=df_results['travel_time1'], y=df_results['travel_time2'],
                #text=df_results['result_name'], mode='text'))
