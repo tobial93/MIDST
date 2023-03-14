@@ -8,7 +8,7 @@ import plotly.express as px
 import webbrowser
 import urllib.parse
 
-st.title("These are Your recomendations")
+st.title("These are Your MIDST recomendations")
 
 spell = st.secrets['spell'] # for STREAMLIT DEPLOYMENT
 api_key = st.secrets.some_magic_api.API_KEY # for STREAMLIT DEPLOYMENT
