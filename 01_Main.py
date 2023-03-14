@@ -137,6 +137,8 @@ if selected_location_B and type_option:
                 ''',
                 unsafe_allow_html=True)
 
+            st.markdown('Check your Recomendations on the Sidebar')
+
             st.pydeck_chart(pdk.Deck(map_style=pdk.map_styles.ROAD, initial_view_state=pdk.ViewState(
                 latitude=true_midpoint[0],
                 longitude=true_midpoint[1],
@@ -217,6 +219,8 @@ if selected_location_B and type_option:
             <a href={url_B}><button style="background-color:#ffde5a;">How can Your friend get there</button></a>
             ''',
             unsafe_allow_html=True)
+
+        st.markdown('Check your Recomendations on the Sidebar')
 
         st.pydeck_chart(pdk.Deck(map_style=pdk.map_styles.ROAD, initial_view_state=pdk.ViewState(
             latitude=true_midpoint[0],
