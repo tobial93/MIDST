@@ -46,13 +46,13 @@ if st.session_state.type_option != '':
         # categorize rate_level
         try:
             if place['rating'] > 4.5                                             :
-                rating.append('Excellent')
+                rating.append('01_Excellent')
             elif place['rating'] > 4:
-                rating.append('Good')
+                rating.append('02_Good')
             elif place['rating'] > 3:
-                rating.append('Average')
+                rating.append('03_Average')
             elif place['rating'] > 2:
-                rating.append('Poor')
+                rating.append('04_Poor')
             else:
                 rating.append('Terriable')
         except:
