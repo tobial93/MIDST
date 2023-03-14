@@ -116,13 +116,16 @@ if st.session_state.type_option != '':
 
         with col3:
             url_person_A = f"https://www.google.com/maps/dir/{urllib.parse.quote(st.session_state.selected_location_A)}/{urllib.parse.quote(destination)}"
-            #st.write(url_person_A)
-            if st.button("How person A can get to this place"):
-                webbrowser.open_new_tab(url_person_A)
+            st.markdown(f'''
+            <a href={url_person_A}><button style="background-color:#ffde5a;">How You can get there</button></a>
+            ''',
+            unsafe_allow_html=True)
         with col4:
             url_person_B = f"https://www.google.com/maps/dir/{urllib.parse.quote(st.session_state.selected_location_B)}/{urllib.parse.quote(destination)}"
-            if st.button("How person B can get to this place"):
-                webbrowser.open_new_tab(url_person_B)
+            st.markdown(f'''
+            <a href={url_person_B}><button style="background-color:#ffde5a;">How can Your friend get there</button></a>
+            ''',
+            unsafe_allow_html=True)
 
 
     st.pydeck_chart(pdk.Deck(map_style=pdk.map_styles.ROAD, initial_view_state=pdk.ViewState(
