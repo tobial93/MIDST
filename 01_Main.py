@@ -12,7 +12,7 @@ import googlemaps
 
 spell = st.secrets['spell'] # for STREAMLIT DEPLOYMENT
 api_key = st.secrets.some_magic_api.API_KEY # for STREAMLIT DEPLOYMENT
-
+type_option = ''
 
 # st.title('Meet me halfway! :man-kiss-man:')
 
@@ -86,7 +86,7 @@ type_option = st.selectbox(
 
 radius = st.slider('Radius (in meters)', min_value=300, max_value=700)
 
-if type_option:
+if selected_location_B and type_option:
     loc_A_cords = mdt.get_lat_lon(selected_location_A, api_key)
     loc_B_cords = mdt.get_lat_lon(selected_location_B, api_key)
     mid_point = mdt.midpoint(loc_A_cords,loc_B_cords)
@@ -285,7 +285,8 @@ if type_option:
         ],
     ))
 
-if type_option:
+st.session_state['type_option'] = type_option
+if type_option != '':
     st.session_state['true_midpoint'] = true_midpoint
     st.session_state['df_true_midpoint'] = df_true_midpoint
     st.session_state['df_midpoint'] = df_midpoint
