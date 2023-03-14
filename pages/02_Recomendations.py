@@ -22,7 +22,7 @@ if st.session_state.type_option != '':
     time_for_location2 =[]
     result_address= []
     number_of_results = len(st.session_state.places_json['results'])
-    st.write(f'We found {number_of_results} places for you')
+    st.write(f'we found {number_of_results} places for you')
 
     for place in st.session_state.places_json['results']:
         # get the latitude and longitude of the restaurant
@@ -46,13 +46,13 @@ if st.session_state.type_option != '':
         # categorize rate_level
         try:
             if place['rating'] > 4.5                                             :
-                rating.append('01_Excellent')
+                rating.append('Excellent')
             elif place['rating'] > 4:
-                rating.append('02_Good')
+                rating.append('Good')
             elif place['rating'] > 3:
-                rating.append('03_Average')
+                rating.append('Average')
             elif place['rating'] > 2:
-                rating.append('04_Poor')
+                rating.append('Poor')
             else:
                 rating.append('Terriable')
         except:
@@ -85,7 +85,7 @@ if st.session_state.type_option != '':
 
     # Get user inputs for hue variables
     hue_cols = st.multiselect("Please select your criteria:", ['rating','price_level'])
-    st.write(f'You have choose {hue_cols} as your criteria. Please hover around the plot to see the details of each recommendation and find your best option')
+    st.write(f'you have choose {hue_cols} as your criteria. Please hover around the plot to see the details of each recommendation and find your best option')
 
     # Create plot
     if hue_cols:
@@ -99,7 +99,7 @@ if st.session_state.type_option != '':
         fig = px.scatter(df_results, x='time_personA', y='time_personB', hover_data=['result_name'],color=hue_cols[0], symbol=get_second_item(hue_cols))
         # Add column as annotation
         #fig.add_trace(go.Scatter(x=df_results['travel_time1'], y=df_results['travel_time2'],
-                #text=df_results['result_name'], mode='text'))
+               #text=df_results['result_name'], mode='text'))
 
         # Display Plotly figure in Streamlit app
         st.plotly_chart(fig)
@@ -117,12 +117,13 @@ if st.session_state.type_option != '':
         with col3:
             url_person_A = f"https://www.google.com/maps/dir/{urllib.parse.quote(st.session_state.selected_location_A)}/{urllib.parse.quote(destination)}"
             #st.write(url_person_A)
-            if st.button("How You can get to this place"):
+            if st.button("How person A can get to this place"):
                 webbrowser.open_new_tab(url_person_A)
         with col4:
             url_person_B = f"https://www.google.com/maps/dir/{urllib.parse.quote(st.session_state.selected_location_B)}/{urllib.parse.quote(destination)}"
-            if st.button("How Your friend can get to this place"):
+            if st.button("How person B can get to this place"):
                 webbrowser.open_new_tab(url_person_B)
+
 
     st.pydeck_chart(pdk.Deck(map_style=pdk.map_styles.ROAD, initial_view_state=pdk.ViewState(
                     latitude=st.session_state.true_midpoint[0],

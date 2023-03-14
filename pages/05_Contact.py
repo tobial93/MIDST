@@ -13,10 +13,10 @@ st.write("# Meet the MIDST Team")
 
 # define the list of contacts
 contacts = [
-    ('Tobias', 'Lewen', 'https://www.linkedin.com/in/johndoe/'),
-    ('Israel', 'Maureira DLF', 'https://www.linkedin.com/in/janedoe/'),
-    ('Raffele', 'Triggiano', 'https://www.linkedin.com/in/bobsmith/'),
-    ('Xiao', 'Zhou', 'https://www.linkedin.com/in/alicejones/')
+    ('Tobias', 'Lewen', 'https://www.linkedin.com/in/tobias-lewen-983b61242/'),
+    ('Israel', 'Maureira', 'https://www.linkedin.com/in/israelmaureira/'),
+    ('Raffaele', 'Triggiano', 'https://www.linkedin.com/in/raffaele-triggiano-1926b616/'),
+    ('Xiao', 'Zhou', 'https://www.linkedin.com/in/xiaozhou7/')
 ]
 
 # set up the columns
