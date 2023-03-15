@@ -185,7 +185,7 @@ if st.session_state.type_option != '':
 
     if hue_cols:
         st.write('### ')
-        st.write('You can hover on the plot to see whats the option that fits you better')
+        st.write('You can hover on the plot to see what option fits you better')
 
     # Create plot
         st.set_option('deprecation.showPyplotGlobalUse', False)
