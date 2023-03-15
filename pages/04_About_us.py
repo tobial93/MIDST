@@ -22,7 +22,7 @@ st.sidebar.title('About MIDST')
 
 
 st.image(['midst/images/name.png', 'midst/images/logo_alone_small.png'], use_column_width=200)
-st.write("# Meet in the Middle is now Faire and Fun!")
+st.write("# Meet in the Middle is now Fair and Fun!")
 #st.write("This is some **bold** and *italic* text.")
 #st.write("Here's a [link](https://www.streamlit.io/) to Streamlit's website.")
 
