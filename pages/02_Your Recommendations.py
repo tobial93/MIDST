@@ -19,6 +19,7 @@ if st.session_state.type_option != '':
     results_name = []
     rating = []
     price_level = []
+    price_level_ = []
     time_for_location1 = []
     time_for_location2 = []
     time_for_location1_ = []
@@ -66,6 +67,22 @@ if st.session_state.type_option != '':
             price_level.append(place['price_level'])
         except:
             price_level.append(0)
+
+        try:
+            if place['price_level'] == 0:
+                price_level_.append("Not specified")
+            if place['price_level'] == 1:
+                price_level_.append("Budget-friendly")
+            if place['price_level'] == 2:
+                price_level_.append("Moderately-priced")
+            if place['price_level'] == 3:
+                price_level_.append("Expensive")
+            if place['price_level'] == 4:
+                price_level_.append("Very expensive")
+        except:
+            price_level_.append("Not specified")
+
+
         # categorize rate_level
         try:
             if place['rating'] > 4.5                                             :
@@ -85,7 +102,7 @@ if st.session_state.type_option != '':
     df_results = pd.DataFrame({
         'Name': results_name,
         'Rating': rating,
-        'Pricing': price_level,
+        'Pricing': price_level_,
         'Time for YOU': time_for_location1,
         'Time for YOUR friend': time_for_location2,
         'Address': result_address})
